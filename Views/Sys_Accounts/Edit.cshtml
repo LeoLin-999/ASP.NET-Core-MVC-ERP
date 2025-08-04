@@ -1,0 +1,56 @@
+@model MvcERPTest01.Models.Sys_Accounts
+
+@{
+    ViewData["Title"] = "帳號維護";
+}
+
+<h1>帳號</h1>
+
+<h4>維護</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AccountID" />
+            <div class="form-group">
+                <label asp-for="AccountStatus" class="control-label"></label>
+				<input class="form-check-input" type="radio" asp-for="AccountStatus" value="0" />
+				<label class="form-check-label">初始</label>
+				<input class="form-check-input" type="radio" asp-for="AccountStatus" value="1" />
+				<label class="form-check-label">啟用</label>
+				<input class="form-check-input" type="radio" asp-for="AccountStatus" value="2" />
+				<label class="form-check-label">鎖定</label>
+				<input class="form-check-input" type="radio" asp-for="AccountStatus" value="3" />
+				<label class="form-check-label">停用</label>
+                <span asp-validation-for="AccountStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EMail" class="control-label"></label>
+                <input asp-for="EMail" class="form-control" />
+                <span asp-validation-for="EMail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

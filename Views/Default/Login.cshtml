@@ -1,0 +1,24 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "登入 ERP 系統";
+}
+
+<div class="text-center">
+    <h1 class="display-4">ERP</h1>
+    <div class="col-md-4">
+		<form asp-action="Login" method="post">
+			<div>
+				<label>帳號：</label>
+				<input asp-for="AccountID" />
+			</div>
+			<div>
+				<label>密碼：</label>
+				<input asp-for="Password" type="password" />
+			</div>
+			<button type="submit">登入</button>
+			<br />
+			<a class="navbar-brand" asp-area="" asp-controller="Default" asp-action="AccountRegister">註冊新帳號</a><br />
+		</form>
+	</div>
+</div>

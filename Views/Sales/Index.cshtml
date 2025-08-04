@@ -1,0 +1,89 @@
+@model IEnumerable<SalesDto>
+
+@{
+    ViewData["Title"] = "銷貨管理";
+}
+
+<h1>銷貨管理</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Sales_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sales_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sales_Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total_Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Shipping_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Update_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdaterName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Create_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreaterName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sales_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orders_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sales_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sales_Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total_Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Shipping_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Update_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdaterName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Create_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreaterName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Sales_ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Sales_ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Sales_ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

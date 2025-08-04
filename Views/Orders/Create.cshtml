@@ -1,0 +1,64 @@
+@model MvcERPTest01.Models.Orders
+
+@{
+    ViewData["Title"] = "訂單管理";
+}
+
+<h1>訂單維護</h1>
+
+<h4>新增訂單</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Customer_ID" class="control-label"></label>
+				<select asp-for="Customer_ID" class="form-select" asp-items="ViewBag.CustomerList">
+					<option value="">請選擇</option>
+				</select>
+                <span asp-validation-for="Customer_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Orders_Date" class="control-label"></label>
+                <input asp-for="Orders_Date" class="form-control" />
+                <span asp-validation-for="Orders_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Orders_Status" class="control-label"></label>
+				<input class="form-check-input" type="radio" asp-for="Orders_Status" value="0" />
+				<label class="form-check-label">草稿</label>
+				<input class="form-check-input" type="radio" asp-for="Orders_Status" value="2" />
+				<label class="form-check-label">待出貨</label>
+				<input class="form-check-input" type="radio" asp-for="Orders_Status" value="4" />
+				<label class="form-check-label">部分出貨</label>
+				<input class="form-check-input" type="radio" asp-for="Orders_Status" value="5" />
+				<label class="form-check-label">已出貨</label>
+				<input class="form-check-input" type="radio" asp-for="Orders_Status" value="3" />
+				<label class="form-check-label">取消</label>
+                <span asp-validation-for="Orders_Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Orders_Type" class="control-label"></label>
+                <input asp-for="Orders_Type" class="form-control" />
+                <span asp-validation-for="Orders_Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Delivery_Date" class="control-label"></label>
+                <input asp-for="Delivery_Date" class="form-control" />
+                <span asp-validation-for="Delivery_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="存檔" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

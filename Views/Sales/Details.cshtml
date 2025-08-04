@@ -1,0 +1,103 @@
+@model SalesViewModel
+
+@{
+    ViewData["Title"] = "銷貨管理";
+}
+
+<h1>銷貨資訊</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalesInfo.Sales_ID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalesInfo.Sales_ID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalesInfo.Orders_ID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalesInfo.Orders_ID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalesInfo.Sales_Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalesInfo.Sales_Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalesInfo.Sales_Status)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalesInfo.Sales_Status)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalesInfo.Total_Amount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalesInfo.Total_Amount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalesInfo.Shipping_Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalesInfo.Shipping_Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalesInfo.Update_Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalesInfo.Update_Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalesInfo.UpdaterName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalesInfo.UpdaterName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalesInfo.Create_Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalesInfo.Create_Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SalesInfo.CreaterName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SalesInfo.CreaterName)
+        </dd>
+    </dl>
+</div>
+<h4 class="mt-4">銷貨明細清單</h4>
+<table class="table table-bordered">
+	<thead class="table-dark">
+		<tr>
+			<th>產品</th>
+			<th>數量</th>
+			<th>單價</th>
+			<th>小計</th>
+			<th>建立人員</th>
+			<th>修改人員</th>
+		</tr>
+	</thead>
+	<tbody>
+	@foreach (var d in Model.DetailList)
+	{
+		<tr>
+			<td>@d.Product_Name (@d.Product_ID)</td>
+			<td>@d.Sales_Qty</td>
+			<td>@d.Sales_Amount</td>
+			<td>@d.Sales_SubTotal</td>
+			<td>@d.CreaterName</td>
+			<td>@d.UpdaterName</td>
+		</tr>
+	}
+	</tbody>
+</table>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.SalesInfo?.Sales_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

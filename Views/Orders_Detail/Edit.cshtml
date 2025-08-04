@@ -1,0 +1,49 @@
+@model MvcERPTest01.Models.Orders_Detail
+
+@{
+    ViewData["Title"] = "訂單明細維護";
+}
+
+<h1>訂單明細產品</h1>
+
+<h4>維護</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SequenceID" />
+			<input type="hidden" asp-for="Orders_ID" />
+            <div class="form-group">
+                <label asp-for="Product_ID" class="control-label"></label>
+				<select asp-for="Product_ID" class="form-select" asp-items="ViewBag.ProductList">
+					<option value="">請選擇</option>
+				</select>
+                <span asp-validation-for="Product_ID" class="text-danger"></span>
+            </div>
+			<div class="form-group mb-2">
+                <label asp-for="Warehouse_ID" class="control-label"></label>
+				<select asp-for="Warehouse_ID" class="form-select" asp-items="ViewBag.WarehouseList">
+					<option value="">請選擇</option>
+				</select>
+                <span asp-validation-for="Warehouse_ID" class="text-danger"></span>
+			</div>
+            <div class="form-group">
+                <label asp-for="Orders_Qty" class="control-label"></label>
+                <input asp-for="Orders_Qty" class="form-control" />
+                <span asp-validation-for="Orders_Qty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+	<a asp-controller="Orders" asp-action="Edit" asp-route-id="@Model?.Orders_ID">返回訂單</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

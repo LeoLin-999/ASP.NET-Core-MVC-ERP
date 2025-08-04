@@ -1,0 +1,109 @@
+@model PurchaseDetailViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>採購維護</h1>
+
+<h4>編輯採購單</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ArrivalConfirm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PurchaseForm.Purchase_ID" />
+            <div class="form-group">
+                <label asp-for="PurchaseForm.Supplier_ID" class="control-label"></label>
+				<select asp-for="PurchaseForm.Supplier_ID" class="form-select" asp-items="ViewBag.SupplierList">
+					<option value="">請選擇</option>
+				</select>
+                <span asp-validation-for="PurchaseForm.Supplier_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+				<label asp-for="PurchaseForm.Warehouse_ID" class="control-label">入庫倉庫</label>
+				<select asp-for="PurchaseForm.Warehouse_ID" class="form-select" asp-items="ViewBag.WarehouseList">
+					<option value="">請選擇</option>
+				</select>
+                <span asp-validation-for="PurchaseForm.Warehouse_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchaseForm.Purchase_Date" class="control-label"></label>
+                <input asp-for="PurchaseForm.Purchase_Date" class="form-control" />
+                <span asp-validation-for="PurchaseForm.Purchase_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchaseForm.Purchase_Status" class="control-label"></label>
+				<input class="form-check-input" type="radio" asp-for="PurchaseForm.Purchase_Status" value="0" />
+				<label class="form-check-label">編輯</label>
+				<input class="form-check-input" type="radio" asp-for="PurchaseForm.Purchase_Status" value="2" />
+				<label class="form-check-label">送單</label>
+				<input class="form-check-input" type="radio" asp-for="PurchaseForm.Purchase_Status" value="1" />
+				<label class="form-check-label">到貨</label>
+				<input class="form-check-input" type="radio" asp-for="PurchaseForm.Purchase_Status" value="3" />
+				<label class="form-check-label">廢單</label>
+                <span asp-validation-for="PurchaseForm.Purchase_Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchaseForm.Arrival_Date" class="control-label"></label>
+                <input asp-for="PurchaseForm.Arrival_Date" class="form-control" />
+                <span asp-validation-for="PurchaseForm.Arrival_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="存檔" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+	<form asp-action="AddDetail" method="post" class="border rounded p-4 bg-light">
+		<input type="hidden" asp-for="DetailForm.Purchase_ID" />
+		<div class="form-group mb-3">
+			<label asp-for="DetailForm.Product_ID" class="form-label">產品</label>
+			<select asp-for="DetailForm.Product_ID" class="form-select" asp-items="ViewBag.ProductList">
+				<option value="">請選擇</option>
+			</select>
+		</div>
+		<div class="form-group mb-3">
+			<label asp-for="DetailForm.Purchase_Qty" class="form-label">數量</label>
+			<input asp-for="DetailForm.Purchase_Qty" class="form-control" type="number" min="1" />
+		</div>
+		<button type="submit" class="btn btn-success">新增明細</button>
+	</form>
+	<h3 class="mt-4">採購產品</h3>
+	<table class="table">
+		<thead>
+			<tr><th>產品</th><th>數量</th><th>單價</th><th>小計</th><th>操作</th></tr>
+		</thead>
+		<tbody>
+			@foreach (var d in Model.DetailList)
+			{
+				<tr>
+					<td>@d.Product_ID</td>
+					<td>@d.Purchase_Qty</td>
+					<td>@d.Purchase_Amount</td>
+					<td>@d.Purchase_SubTotal</td>
+					<td>
+						<form asp-action="DeleteDetail" method="post">
+							<input type="hidden" name="id" value="@d.SequenceID" />
+							<button type="submit" class="btn btn-danger btn-sm">刪除</button>
+						</form>
+						<a class="btn btn-sm btn-outline-primary"
+						   asp-controller="Purchase_Detail"
+						   asp-action="Edit"
+						   asp-route-id="@d.SequenceID"
+						   asp-route-PurchaseID="@d.Purchase_ID">
+						   編輯
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

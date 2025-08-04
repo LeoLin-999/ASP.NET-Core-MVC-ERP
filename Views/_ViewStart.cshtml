@@ -1,0 +1,7 @@
+﻿@{
+	var controller = ViewContext.RouteData.Values["controller"].ToString();
+	if (controller == "Home" || controller == "Default")
+		Layout = "_Layout";
+	else
+		Layout = "_ErpLayout";
+}

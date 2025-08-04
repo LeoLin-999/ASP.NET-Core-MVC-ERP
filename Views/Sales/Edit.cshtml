@@ -1,0 +1,76 @@
+@model SalesViewModel
+
+@{
+    ViewData["Title"] = "銷貨管理";
+}
+
+<h1>銷貨維護</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SalesForm.Sales_ID" />
+            <div class="form-group">
+                <label asp-for="SalesForm.Sales_Date" class="control-label"></label>
+                <input asp-for="SalesForm.Sales_Date" class="form-control" />
+                <span asp-validation-for="SalesForm.Sales_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SalesForm.Sales_Status" class="control-label"></label>
+				<input class="form-check-input" type="radio" asp-for="SalesForm.Sales_Status" value="0" />
+				<label class="form-check-label">待出貨</label>
+				<input class="form-check-input" type="radio" asp-for="SalesForm.Sales_Status" value="1" />
+				<label class="form-check-label">出貨</label>
+                <span asp-validation-for="SalesForm.Sales_Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SalesForm.Total_Amount" class="control-label"></label>
+                <input asp-for="SalesForm.Total_Amount" class="form-control" />
+                <span asp-validation-for="SalesForm.Total_Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SalesForm.Shipping_Date" class="control-label"></label>
+                <input asp-for="SalesForm.Shipping_Date" class="form-control" />
+                <span asp-validation-for="SalesForm.Shipping_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<h4 class="mt-4">銷貨明細清單</h4>
+<table class="table table-bordered">
+	<thead class="table-dark">
+		<tr>
+			<th>產品</th>
+			<th>數量</th>
+			<th>單價</th>
+			<th>小計</th>
+			<th>建立人員</th>
+			<th>修改人員</th>
+		</tr>
+	</thead>
+	<tbody>
+	@foreach (var d in Model.DetailList)
+	{
+		<tr>
+			<td>@d.Product_Name (@d.Product_ID)</td>
+			<td>@d.Sales_Qty</td>
+			<td>@d.Sales_Amount</td>
+			<td>@d.Sales_SubTotal</td>
+			<td>@d.CreaterName</td>
+			<td>@d.UpdaterName</td>
+		</tr>
+	}
+	</tbody>
+</table>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

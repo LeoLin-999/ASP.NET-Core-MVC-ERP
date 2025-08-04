@@ -1,0 +1,83 @@
+@model IEnumerable<MvcERPTest01.Models.Purchase_Detail>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Create_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Creater)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Update_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updater)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Purchase_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Purchase_Qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Purchase_Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Purchase_SubTotal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Create_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creater)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Update_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updater)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Purchase_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Purchase_Qty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Purchase_Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Purchase_SubTotal)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SequenceID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SequenceID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SequenceID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

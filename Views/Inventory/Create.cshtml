@@ -1,0 +1,69 @@
+@model MvcERPTest01.Models.Inventory
+
+@{
+    ViewData["Title"] = "庫存管理";
+}
+
+<h1>庫存維護</h1>
+
+<h4>新增庫存產品</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Product_ID" class="control-label"></label>
+				<select asp-for="Product_ID" class="form-select" asp-items="ViewBag.ProductList">
+					<option value="">請選擇</option>
+				</select>
+                <span asp-validation-for="Product_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Warehouse_ID" class="control-label"></label>
+				<select asp-for="Warehouse_ID" class="form-select" asp-items="ViewBag.WarehouseList">
+					<option value="">請選擇</option>
+				</select>
+                <span asp-validation-for="Warehouse_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inventory_Status" class="control-label"></label>
+				<input class="form-check-input" type="radio" asp-for="Inventory_Status" value="0" />
+				<label class="form-check-label">編輯</label>
+				<input class="form-check-input" type="radio" asp-for="Inventory_Status" value="1" />
+				<label class="form-check-label">啟用</label>
+				<input class="form-check-input" type="radio" asp-for="Inventory_Status" value="2" />
+				<label class="form-check-label">到期</label>
+				<input class="form-check-input" type="radio" asp-for="Inventory_Status" value="3" />
+				<label class="form-check-label">停用</label>
+                <span asp-validation-for="Inventory_Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinStockLevel" class="control-label"></label>
+                <input asp-for="MinStockLevel" class="form-control" />
+                <span asp-validation-for="MinStockLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxStockLevel" class="control-label"></label>
+                <input asp-for="MaxStockLevel" class="form-control" />
+                <span asp-validation-for="MaxStockLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="存檔" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
