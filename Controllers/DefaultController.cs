@@ -9,10 +9,13 @@ namespace MvcERPTest01.Controllers;
 public class DefaultController : Controller
 {
 	private readonly ErpDbContext _context;
+	// AES加解密服務
+	private readonly AesHelper _aesHelper;
 
-    public DefaultController(ErpDbContext context)
+    public DefaultController(ErpDbContext context, AesHelper aesHelper)
     {
 		_context = context;
+		_aesHelper = aesHelper;
     }
 
     public IActionResult Index()
@@ -52,9 +55,17 @@ public class DefaultController : Controller
 			}
 		}
 
-		var user = _context.Sys_Accounts
-			.FirstOrDefault(x => x.AccountID == model.AccountID && x.Password == model.Password);
-
+		//var user = _context.Sys_Accounts
+		//	.FirstOrDefault(x => x.AccountID == model.AccountID && x.Password == model.Password);
+		// 將輸入的密碼加密後比對
+		string encryptedPassword = string.Empty;
+		if (!string.IsNullOrEmpty(model.Password))
+			encryptedPassword = _aesHelper.Encrypt(model.Password);
+		var user = _context.Sys_Accounts.FirstOrDefault(x =>
+			x.AccountID == model.AccountID &&
+			x.Password == encryptedPassword &&
+			x.AccountStatus == "1"
+		);
 		if (user != null)
 		{
 			// 登入成功，設定 Cookie
@@ -128,6 +139,8 @@ public class DefaultController : Controller
 				ModelState.AddModelError("AccountID", "帳號已存在，請使用其他帳號！");
 				return View(sys_Accounts);
 			}
+			// 密碼加密
+			sys_Accounts.Password = _aesHelper.Encrypt(sys_Accounts.Password);
 
 			_context.Add(sys_Accounts);
 			await _context.SaveChangesAsync();

@@ -16,11 +16,14 @@ namespace MvcERPTest01.Controllers
     {
         private readonly ErpDbContext _context;
 		private readonly IConfiguration _configuration;
+		// AES加解密服務
+		private readonly AesHelper _aesHelper;
 
-		public Sys_AccountsController(ErpDbContext context, IConfiguration configuration)
+		public Sys_AccountsController(ErpDbContext context, IConfiguration configuration, AesHelper aesHelper)
 		{
 			_context = context;
 			_configuration = configuration;
+			_aesHelper = aesHelper;
 		}
 
         // GET: Sys_Accounts
@@ -73,7 +76,8 @@ namespace MvcERPTest01.Controllers
 				 FullName = s.FullName,
 				 EMail = s.EMail,
 				 CreaterName = c != null ? c.FullName : s.Creater,
-				 UpdaterName = u != null ? u.FullName : s.Updater
+				 UpdaterName = u != null ? u.FullName : s.Updater,
+				 Password = _aesHelper.Decrypt(s.Password)
 				}).FirstOrDefaultAsync();
 
             return View(sys_AccountsDto);
@@ -102,6 +106,9 @@ namespace MvcERPTest01.Controllers
 				ModelState.Remove("Create_Date");
 			if (ModelState.ContainsKey("Creater"))
 				ModelState.Remove("Creater");
+			// 密碼加密
+			if (!string.IsNullOrEmpty(sys_Accounts.Password))
+				sys_Accounts.Password = _aesHelper.Encrypt(sys_Accounts.Password);
 			// 除錯訊息
 			if (!ModelState.IsValid)
 			{
@@ -184,6 +191,10 @@ namespace MvcERPTest01.Controllers
 				sys_Accounts.Update_Date = new DateTime(1753, 1, 1);
 			}
 			sys_Accounts.Updater = UserID ?? "System";
+
+			// 密碼加密
+			if (!string.IsNullOrEmpty(sys_Accounts.Password))
+				sys_Accounts.Password = _aesHelper.Encrypt(sys_Accounts.Password);
 
 			var connectionString = _configuration.GetConnectionString("ErpDbContext");
 

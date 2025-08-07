@@ -1,11 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MvcERPTest01.Settings;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ErpDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ErpDbContext") ?? throw new InvalidOperationException("Connection string 'ErpDbContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add services to then AES Encrypt & Decrypt
+builder.Services.Configure<AesSettings>(builder.Configuration.GetSection("AesSettings"));
+builder.Services.AddTransient<AesHelper>();
 
 var app = builder.Build();
 
@@ -28,6 +33,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Default}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

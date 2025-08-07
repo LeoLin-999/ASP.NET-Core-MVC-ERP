@@ -23,6 +23,9 @@ public partial class Sys_AccountsDto
 	[Display(Name = "帳號狀態")]
     public string? AccountStatus { get; set; }
 
+	[Display(Name = "密碼")]
+	public string Password { get; set; } = string.Empty;
+
 	[Display(Name = "姓名")]
     public string? FullName { get; set; }
 
